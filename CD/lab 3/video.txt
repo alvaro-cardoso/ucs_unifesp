@@ -1,0 +1,4 @@
+https://drive.google.com/file/d/1mbd7ZPl7YvrJvvSsfbV07RZ9hWK2S2Lc/view
+
+Comentário: Levando em conta que não precisavamos nos preocupar com o número de portas em sequencia e o fan-in
+decidimos optar por esse circuito de mais fácil concepção.

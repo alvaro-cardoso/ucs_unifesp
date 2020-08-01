@@ -1,0 +1,47 @@
+void TPilha_ChecaPilha(TPilha *pPilha){
+TPilha *pilhaaux,*pilhaaux2;
+TItem item,item2,item3;
+int i,x=0,tam,tam2;
+
+pilhaaux = (TPilha *) malloc(sizeof(TPilha));
+TPilha_Inicia(pilhaaux);
+pilhaaux2 = (TPilha *) malloc(sizeof(TPilha));
+TPilha_Inicia(pilhaaux2);
+
+
+item.Chave='z';
+item2.Chave='z';
+
+while (! TPilha_EhVazia(pPilha) && x<1){
+
+while((! TPilha_EhVazia(pPilha))&&(item.Chave!='D')){
+	TPilha_Desempilha(pPilha,&item);
+	if(item.Chave!='D'){
+		TPilha_Empilha(pilhaaux,item2);}}
+
+		while((! TPilha_EhVazia(pilhaaux))&&(item2.Chave!='C')){
+			TPilha_Desempilha(pilhaaux,&item2);
+	    		if (item2.Chave!='C')
+            		TPilha_Empilha(pilhaaux2,item3);}
+            		
+	tam=TPilha_Tamanho(pPilha);
+	tam2=TPilha_Tamanho(pilhaaux);
+	
+		for (i=0;i<TPilha_Tamanho(pilhaaux);i++){
+        TPilha_Desempilha(pilhaaux,&item2);
+        TPilha_Desempilha(pilhaaux2,&item3);
+    if (tam==tam2 && (strcmp(item2.Chave,item3.Chave))!=0){
+            x=0;}
+            else{ x=1;
+	    break;}}
+
+				while(!= TPilha_EhVazia(pilhaaux){
+				TPilha_Desempilha(pilhaaux,&item2);}
+				while(!= TPilha_EhVazia(pilhaaux){
+				TPilha_Desempilha(pilhaaux2,&item3);}}
+
+if (x<1)printf("a cadeia eh da forma aDb...Dz\n");
+        else printf ("a cadeia nao eh da forma aDb...Dz\n");
+        free(pilhaaux2);
+        free(pilhaaux);
+        return 0; }

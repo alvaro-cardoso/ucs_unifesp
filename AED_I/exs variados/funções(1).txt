@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "TArvBin.h"
+
+
+TArvBin TArvBin_Inicia(){
+    return NULL;
+}
+
+TArvBin TArvBin_CriaNo(TItem x, TArvBin Esq, TArvBin Dir){
+    TArvBin No;
+    No = (TArvBin) malloc(sizeof(TNo));
+    No->Item = x;
+    No->Esq = Esq;
+    No->Dir = Dir;
+    return No;
+}
+
+int TArvBin_EhExterno(TArvBin No){
+    return ((No == NULL) || ((No->Esq == NULL) && (No->Dir == NULL)));
+}
+
+TArvBin TArvBin_SubarvoreEsquerda(TArvBin No){
+    return No->Esq;
+}
+
+TArvBin TArvBin_SubarvoreDireita(TArvBin No){
+    return No->Dir;
+}
+
+void TArvBin_Libera(TArvBin No){
+    if (No != NULL) {
+        TArvBin_Libera(No->Esq);
+        TArvBin_Libera(No->Dir);
+        free(No);
+    }
+}
+
+int Conta_No (TArvBin No){
+int cont=0;
+
+if (No!=NULL){
+cont++;
+cont=cont+(Conta_No(No->Esq));
+cont=cont+(Conta_No(No->Dir));
+}
+
+return cont;
+}
+
+int Soma_No(TArvBin No){
+int soma=0;
+
+if(No!=NULL){
+    soma=No->Item.Chave;
+    soma=soma+(Soma_No(No->Dir));
+    soma=soma+(Soma_No(No->Esq));
+}
+
+return soma;
+}
+
+int EH_Bin(TArvBin No){
+int check=0;
+if(No!=NULL){
+if(No->Dir!=NULL && No->Esq!=NULL){
+    check=1;
+    check=EH_Bin(No->Dir);
+    check=EH_Bin(No->Esq);
+}
+else if (No->Dir==NULL && No->Esq==NULL){
+    check=1;
+    }
+ return check;
+}
+
+}

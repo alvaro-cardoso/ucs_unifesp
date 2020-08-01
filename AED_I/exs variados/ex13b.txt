@@ -1,0 +1,18 @@
+void TPilha_ChecaPilha(TPilha *pPilha){
+TPilha pilhaaux;
+TItem item;
+int i,x;
+
+while((! TPilha_EhVazia(pPilha))&&(item.Chave!='C')){
+            TPilha_Desempilha(&pPilha,&item);
+	    if (item.Chave!='C')
+            TPilha_Empilha(&pilhaaux,item);}
+
+for (i=0;i<pPilha->Topo;i++){
+        TPilha_Desempilha(&pPilha,&item);
+        TPilha_Desempilha(&pilhaaux,&item);
+    if (TPilha_Tamanho(&pPilha)==TPilha_Tamanho(&pilhaaux) && (strcmp(TPilha->item.Chave[i],pilhaaux.item.Chave[i]))!=0){
+            x=0;}
+            else x=1;}
+        if (x<1)printf("a cadeia eh da forma xCy\n");
+        else printf ("a cadeia nao eh da forma xCy\n");}

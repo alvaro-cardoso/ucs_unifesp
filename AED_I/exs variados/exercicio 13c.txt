@@ -1,0 +1,28 @@
+void TPilha_ChecaPilha(TPilha *pPilha){
+TPilha *pilhaaux;
+TItem item,item2;
+int i,x,tam,tam2;
+
+pilhaaux = (TPilha *) malloc(sizeof(TPilha));
+TPilha_Inicia(pilhaaux);
+
+item.Chave='z';
+
+while((! TPilha_EhVazia(pPilha))&&(item.Chave!='C')){
+            TPilha_Desempilha(pPilha,&item);
+	    if (item.Chave!='C')
+            TPilha_Empilha(pilhaaux,item2);}
+tam=TPilha_Tamanho(pPilha);
+tam2=TPilha_Tamanho(pilhaaux);
+for (i=0;i<TPilha_Tamanho(pPilha);i++){
+        TPilha_Desempilha(pPilha,&item);
+        TPilha_Desempilha(pilhaaux,&item2);
+    if (tam==tam2 && item.Chave==item2.Chave){
+            x=0;}
+            else{ x=1;
+            break;}}
+
+        if (x<1){printf("a cadeia eh da forma xCy\n");}
+        else printf ("a cadeia nao eh da forma xCy\n");
+        free(pilhaaux);
+        return 0;}

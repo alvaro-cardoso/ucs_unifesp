@@ -1,0 +1,39 @@
+int Conta_No (TArvBin No){
+int cont=0;
+
+if (No!=NULL){
+cont++;
+cont=cont+(Conta_No(No->Esq));
+cont=cont+(Conta_No(No->Dir));
+}
+
+return cont;
+}
+
+int Soma_No(TArvBin No){
+int soma=0;
+
+if(No!=NULL){
+    soma=No->Item.Chave;
+    soma=soma+(Soma_No(No->Dir));
+    soma=soma+(Soma_No(No->Esq));
+}
+
+return soma;
+}
+
+int EH_Bin(TArvBin No){
+int check=0;
+if(No!=NULL){
+if(No->Dir!=NULL && No->Esq!=NULL){
+    check=1;
+    check=EH_Bin(No->Dir);
+    check=EH_Bin(No->Esq);
+}
+else if (No->Dir==NULL && No->Esq==NULL){
+    check=1;
+    }
+ return check;
+}
+
+}

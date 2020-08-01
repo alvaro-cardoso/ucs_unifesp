@@ -1,0 +1,3 @@
+CREATE TABLE ATOR (coda int, nomeart varchar(25), nomereal varchar (25), nacionalidade varchar (25), sexo char, indicacoesoscar int, num_oscar int, PRIMARY KEY(coda))
+CREATE TABLE FILME (codf int, nome varchar(20), ano date, orcamento float, tempo float, PRIMARY KEY(codf) )
+CREATE TABLRE PERSONAGEM (conda int, codf int, personagem varchar(25), cache float, PRIMARY KEY(codf), PRIMARY KEY(coda), FOREIGN KEY(codf) REFERENCES FILME(codf), FOREIGN KEY(coda) REFERENCES ATOR(coda))

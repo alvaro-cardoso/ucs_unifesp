@@ -1,0 +1,4 @@
+link do vídeo: https://drive.google.com/file/d/12GFwFRqEFi1txyto4ddzrYj7L_nzLtyU/view
+
+OBS: O main demora um pouco a abrir dependendo do hardware do pc devido ao tamanho do projeto
+, mas foi testado, com sucesso, em três maquinas diferentes.

@@ -1,0 +1,112 @@
+
+UNIVERSIDADE FEDERAL DE SÃO PAULO
+
+2019
+
+ARQUITETURA E ORGANIZAÇÃO DE COMPUTADORES
+
+LABORATÓRIO MIPS I
+
+ 
+
+GRUPO
+
+Álvaro Cardoso Vicente de Souza - 133536
+
+Gabriel Angelo Cabral Neves - 136124
+
+Jonathan Andrade de Oliveira - 133702
+
+ 
+
+CÓDIGO
+
+.data
+prompt1: .asciiz "Enter the first number: "
+prompt2: .asciiz "Enter the second number: "
+prompt3: .asciiz "Enter the third number: "
+resultText: .asciiz "Your final result is: "
+
+.text
+.globl main
+main:
+
+li $v0, 4
+la $a0, prompt1
+syscall
+
+li $v0, 5
+syscall
+move $t0, $v0
+
+li $v0, 4
+la $a0, prompt2
+syscall
+
+li $v0, 5
+syscall
+move $t1, $v0
+
+li $v0, 4
+la $a0, prompt3
+syscall
+
+li $v0, 5
+syscall
+move $t2, $v0
+
+slt $t3,$t0,$t1
+beq $t3,1,L1
+
+slt $t3,$t0,$t2
+beq $t3,1,L2
+
+
+li $v0, 1
+la $a0, ($t0)
+syscall
+j END
+
+L1: slt $t3,$t1,$t2
+beq $t3,1,L2
+
+li $v0, 1
+la $a0, ($t1)
+syscall
+j END
+
+L2: li $v0, 1
+la $a0, ($t2)
+syscall
+
+END:
+li $v0,10
+syscall
+
+ 
+
+SAÍDAS
+
+ 
+
+A MAIOR
+
+Enter the first number: 5
+Enter the second number: 2
+Enter the third number: 3
+5
+
+B MAIOR
+
+Enter the first number: -6
+Enter the second number: -2
+Enter the third number: -3
+-2
+
+C MAIOR
+
+Enter the first number: 1989
+Enter the second number: 2
+Enter the third number: 54894498
+54894498
+

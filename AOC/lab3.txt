@@ -1,0 +1,140 @@
+UNIVERSIDADE FEDERAL DE SÃO PAULO
+
+2019
+
+ARQUITETURA E ORGANIZAÇÃO DE COMPUTADORES
+
+LABORATÓRIO MIPS III
+
+ 
+
+GRUPO
+
+Álvaro Cardoso Vicente de Souza - 133536
+
+Gabriel Angelo Cabral Neves - 136124
+
+Jonathan Andrade de Oliveira - 133702
+
+ 
+
+CÓDIGO
+
+.data
+Prompt: .asciiz "Insert a float number: "
+Prompt1: .asciiz "The number in IEEE 754 is: "
+zeroFloat: .float 0.0
+oneFloat: .float 1.0
+twoFloat: .float 2.0
+Inteiro: .space 92
+Expoente: .space 32
+Barran: .asciiz "\n"
+
+.text
+lwc1 $f4, zeroFloat
+lwc1 $f6, oneFloat
+lwc1 $f10, twoFloat
+
+li $v0, 4
+la $a0, Prompt
+syscall
+
+li $v0, 6 # Pede o numero float e o armazena em f0
+syscall
+
+cvt.w.s $f8, $f0 # Converte o numero para inteiro
+mfc1 $s0, $f8 # Armazena o numero s0
+
+cvt.s.w $f8, $f8 # O numero inteiro convertido continua em f8, entao convertemos para float denovo para pegar a parte fracionaria
+sub.s $f8, $f0, $f8 # Pegando parte fracionaria
+
+li $v0, 4
+la $a0, Prompt1
+syscall
+
+slt $t0, $s0, $zero # Printa o sinal do número
+li $v0, 1
+addi $a0, $t0, 0
+syscall
+
+abs $s0, $s0 # Pega o módulo do numero para transformar para binario
+addi $s2, $zero, 2 # Inicia s2 com o valor 2
+addi $s1, $zero, 0 # Inicia s1 como inidice do vetor
+LoopDiv: # Divide o numero por 2 ate ele ser igual a 1 e guarda em um Array o resto, para ter o numero basta printar o vetor do fim para o inicio
+div $s0, $s2
+mfhi $t0 # Pega o resto da div
+sw $t0, Inteiro($s1) # Armazena o resto no Array
+mflo $s0 # Pega o quociente da div para o prox loop
+addi $s1, $s1, 4 # Anda no vetor
+bne $s0, 1, LoopDiv # Para quando o numero for 1
+# NAO adiciona o bit mais siginificativo, ja que nao aparecera na saida
+
+addi $t0, $zero, 4
+div $s1, $t0
+mflo $s0 # Divide a quantidade de bits achados no loop anterior para calcular o expoente
+addi $s4, $s0, 0 # Guarda a quantidade de bits, para calcular a parte fracionaria
+addi $s0, $s0, 127 # Soma 127 no numero do expoente
+
+addi $s3, $zero, 0 # Inicia s3 como inidice do vetor
+LoopDiv1: # Divide o numero por 2 ate ele ser igual a 1 e guarda em um Array o resto, para ter o numero basta printar o vetor do fim para o inicio
+div $s0, $s2
+mfhi $t0 # Pega o resto da div
+sw $t0, Expoente($s3) # Armazena o resto no Array
+mflo $s0 # Pega o quociente da div para o prox loop
+addi $s3, $s3, 4 # Anda no vetor
+bne $s0, 1, LoopDiv1 # Para quando o numero for 1
+sw $s0, Expoente($s3) # Adiciona o bit mais significativo
+
+LoopExpoente: # Printa o expoente
+lw $t0, Expoente($s3)
+li $v0, 1
+add $a0, $zero, $t0
+syscall
+subi $s3, $s3, 4
+bgez $s3, LoopExpoente
+
+subi $s1, $s1, 4 # Subtrai um indice, pois não inclui o bit mais significativo
+LoopInteiro: # Printa a parte inteira
+lw $t0, Inteiro($s1)
+li $v0, 1
+add $a0, $zero, $t0
+syscall
+subi $s1, $s1, 4
+bgez $s1, LoopInteiro
+
+subi $s4, $s4, 23 # s4 contem a quantidade de bit da parte inteira, e a parte reservada para mantissa contem 23 bits
+abs $s4, $s4 # Logo s4 recebe a quantidade de bits que cabem a parte fracionaria
+abs.s $f8, $f8 # Transforma parte fracionaria em positivo se tiver negativo
+LoopFracionaria:
+# s4 quantidade de bits da parte inteira // 23 - s4 = restante de bits para parte fracionaria
+mul.s $f8, $f8, $f10 # f10 contem o numero 2.0
+c.lt.s $f8, $f6 # Se a multiplicacao for menor que zero, nao subtrai 1.0 e printa 0, caso contrario, subtrai e printa 1
+bc1t NotSub
+sub.s $f8, $f8, $f6 # Subtrai 1.0 se for maior que o mesmo
+li $v0, 1
+addi $a0, $zero, 1 # Printa 1
+syscall
+j Comparison # Pula para comparacao do prox loop
+NotSub: # Nao subtrai 1.0 e printa 0
+li $v0, 1
+addi $a0, $zero, 0
+syscall
+Comparison:
+subi $s4, $s4, 1 # Subtrai 1 da quantidade de bits restantes
+bnez $s4, LoopFracionaria # Se não tiver mais bits para calcular sai do loop
+
+End:
+li $v0, 10
+syscall
+
+ 
+
+SAÍDAS
+
+ 
+
+Insert a float number: -3.14
+The number in IEEE 754 is: 11000000010010001111010111000011
+
+Insert a float number: 1236.5
+The number in IEEE 754 is: 01000100100110101001000000000000

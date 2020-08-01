@@ -1,0 +1,125 @@
+UNIVERSIDADE FEDERAL DE SÃO PAULO
+
+2019
+
+ARQUITETURA E ORGANIZAÇÃO DE COMPUTADORES
+
+LABORATÓRIO MIPS II
+
+ 
+
+GRUPO
+
+Álvaro Cardoso Vicente de Souza - 133536
+
+Gabriel Angelo Cabral Neves - 136124
+
+Jonathan Andrade de Oliveira - 133702
+
+ 
+
+CÓDIGO
+
+ 
+
+.data
+prompt1: .asciiz "Enter the number of tries: "
+prompt2: .asciiz "Higher.\n"
+prompt3: .asciiz "Lower.\n"
+prompt4: .asciiz "Enter your guess: "
+prompt5: .asciiz "You win. Congratulations.\n"
+prompt6: .asciiz "You lose. Better luck next time.\n\n"
+
+.text
+.globl main
+main:
+
+li $a1, 10
+li $v0, 42
+syscall
+add $t0, $a0, 1
+
+li $v0, 4
+la $a0, prompt1
+syscall
+
+li $v0, 5
+syscall
+move $s2, $v0
+
+LOOP:
+beq $s2, $zero, END
+
+li $v0, 4
+la $a0, prompt4
+syscall
+
+li $v0, 5
+syscall
+move $t1, $v0
+
+beq $t1, $zero, END
+
+subi $s2, $s2, 1
+
+slt $t2, $t1, $t0
+beq $t2 , 1, HIGH
+beq $t1, $t0, WIN
+
+
+li $v0, 4
+la $a0, prompt3
+syscall
+
+j LOOP
+HIGH:
+li $v0, 4
+la $a0, prompt2
+syscall
+
+j LOOP
+
+WIN:
+li $v0, 4
+la $a0, prompt5
+syscall
+li $v0,10
+syscall
+
+END:
+li $v0, 4
+la $a0, prompt6
+syscall
+li $v0,10
+syscall
+
+ 
+
+SAÍDA
+
+ 
+
+EXEMPLO 1
+
+Enter the number of tries: 3
+Enter your guess: 2
+Higher.
+Enter your guess: 6
+Higher.
+Enter your guess: 8
+Higher.
+You lose. Better luck next time.
+
+ 
+
+EXEMPLO 2
+
+Enter the number of tries: 5
+Enter your guess: 10
+Lower.
+Enter your guess: 5
+Higher.
+Enter your guess: 7
+Higher.
+Enter your guess: 9
+You win. Congratulations.
